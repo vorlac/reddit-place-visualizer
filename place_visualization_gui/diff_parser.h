@@ -280,9 +280,10 @@ public:
 		return bmp_data;
 	}
 
-	bool Write() const
+	bool Write(const std::string& file_path = std::string()) const
 	{
-		std::ofstream bmp(m_Name, std::ios::out | std::ios::binary);
+		std::string path = file_path.length() > 0 ? file_path : m_Name;
+		std::ofstream bmp(path, std::ios::out | std::ios::binary);
 		if (bmp.is_open())
 		{
 			std::vector<char> data = GenerateBMPData();

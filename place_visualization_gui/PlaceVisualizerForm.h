@@ -51,6 +51,7 @@ namespace place_gui
 			m_pTrackBar->Enabled = true;
 			m_pTrackBar->Minimum = 0;
 			m_pTrackBar->Maximum = static_cast<int>(m_pForwardDiffData->size());
+			saveCurrentFrameToolStripMenuItem->Enabled = true;
 		}
 
 		// Thread function
@@ -195,6 +196,17 @@ namespace place_gui
 			}
 		}
 
+		System::Void saveCurrentFrameToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) 
+		{
+			SaveFileDialog fd;
+			fd.Filter = "Bitmap (*.bmp)|*.bmp";
+			if (fd.ShowDialog() == System::Windows::Forms::DialogResult::OK)
+			{
+				std::string file_path = marshal_as<std::string>(fd.FileName);
+				m_pLastBitmap->Write(file_path);
+			}
+		}
+
 	private: 
 		// UI Widgets
 		System::Windows::Forms::PictureBox^			m_pPictureBox;
@@ -203,6 +215,7 @@ namespace place_gui
 		System::Windows::Forms::MenuStrip^			menuStrip1;
 		System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
 		System::Windows::Forms::ToolStripMenuItem^  loadDiffToolStripMenuItem;
+		System::Windows::Forms::ToolStripMenuItem^	saveCurrentFrameToolStripMenuItem;
 		System::Windows::Forms::Label^				m_pProgressLabel;
 
 		// Required designer variable.
@@ -225,6 +238,7 @@ namespace place_gui
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->loadDiffToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveCurrentFrameToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->m_pProgressLabel = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->m_pPictureBox))->BeginInit();
 			this->m_pTableLayout->SuspendLayout();
@@ -284,7 +298,10 @@ namespace place_gui
 			// 
 			// fileToolStripMenuItem
 			// 
-			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->loadDiffToolStripMenuItem });
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->loadDiffToolStripMenuItem,
+					this->saveCurrentFrameToolStripMenuItem
+			});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(37, 20);
 			this->fileToolStripMenuItem->Text = L"File";
@@ -292,9 +309,17 @@ namespace place_gui
 			// loadDiffToolStripMenuItem
 			// 
 			this->loadDiffToolStripMenuItem->Name = L"loadDiffToolStripMenuItem";
-			this->loadDiffToolStripMenuItem->Size = System::Drawing::Size(131, 22);
+			this->loadDiffToolStripMenuItem->Size = System::Drawing::Size(177, 22);
 			this->loadDiffToolStripMenuItem->Text = L"Load Diff...";
 			this->loadDiffToolStripMenuItem->Click += gcnew System::EventHandler(this, &PlaceVisualizerForm::loadDiffToolStripMenuItem_Click);
+			// 
+			// saveCurrentFrameToolStripMenuItem
+			// 
+			this->saveCurrentFrameToolStripMenuItem->Enabled = false;
+			this->saveCurrentFrameToolStripMenuItem->Name = L"saveCurrentFrameToolStripMenuItem";
+			this->saveCurrentFrameToolStripMenuItem->Size = System::Drawing::Size(177, 22);
+			this->saveCurrentFrameToolStripMenuItem->Text = L"Save Current Frame";
+			this->saveCurrentFrameToolStripMenuItem->Click += gcnew System::EventHandler(this, &PlaceVisualizerForm::saveCurrentFrameToolStripMenuItem_Click);
 			// 
 			// m_pProgressLabel
 			// 
@@ -327,6 +352,6 @@ namespace place_gui
 			this->PerformLayout();
 
 		}
-#pragma endregion		
+#pragma endregion
 	};
 }
