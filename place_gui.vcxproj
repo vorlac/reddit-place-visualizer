@@ -143,17 +143,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="PlaceVisualizerForm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="diff_parser.h" />
-    <ClInclude Include="MyForm.h">
+    <ClInclude Include="PlaceVisualizerForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MyForm.resx">
-      <DependentUpon>MyForm.h</DependentUpon>
+    <EmbeddedResource Include="PlaceVisualizerForm.resx">
+      <DependentUpon>PlaceVisualizerForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

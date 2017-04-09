@@ -198,7 +198,7 @@ public:
 		, m_Name(rhs.m_Name)
 	{
 		m_PixelData.resize(rhs.m_InfoHeader.Height());
-		for (auto i = 0; i < m_PixelData.size(); ++i)
+		for (size_t i = 0; i < m_PixelData.size(); ++i)
 			m_PixelData[i] = rhs.m_PixelData[i];
 	}
 
@@ -232,7 +232,7 @@ public:
 		return true;
 	}
 
-	std::vector<char> GenerateBMP() const
+	std::vector<char> GenerateBMPData() const
 	{
 		std::vector<char> bmp_data;
 		bmp_data.resize(m_FileHeader.FileSize());
@@ -282,45 +282,11 @@ public:
 
 	bool Write() const
 	{
-		std::ofstream bmp2(m_Name, std::ios::out | std::ios::binary);
-		if (bmp2.is_open())
-		{
-			std::vector<char> data = GenerateBMP();
-			bmp2.write(data.data(), data.size());
-			bmp2.close();
-		}
-
-		return true;
-	}
-
-	bool WriteBMP() const
-	{
 		std::ofstream bmp(m_Name, std::ios::out | std::ios::binary);
 		if (bmp.is_open())
 		{
-			// write bmp file header
-			bmp.write(reinterpret_cast<const char*>(&m_FileHeader), sizeof(m_FileHeader));
-
-			// write bmp info header
-			bmp.write(reinterpret_cast<const char*>(&m_InfoHeader), sizeof(m_InfoHeader));
-
-			// write pixel data
-			const auto height = m_InfoHeader.Height();
-			const auto width = m_InfoHeader.Width();
-			for (int32_t row = height; row--; /*empty*/)
-			{
-				for (int32_t col = 0; col < width; ++col)
-				{
-					const BitMapColor& rgb = m_PixelData[row][col];
-					bmp.write(reinterpret_cast<const char*>(&rgb), sizeof(rgb));
-				}
-
-				// pad each row if not 4 byte aligned
-				static char padding[4] = { 0,0,0,0 };
-				auto row_bytes = sizeof(BitMapColor) * width;
-				auto pad_bytes = (4 - (row_bytes % 4)) % 4;
-				bmp.write(padding, pad_bytes);
-			}
+			std::vector<char> data = GenerateBMPData();
+			bmp.write(data.data(), data.size());
 			bmp.close();
 		}
 
