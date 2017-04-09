@@ -1,0 +1,1 @@
+The place project implements a console application that generates ~50,000 bitmaps showing snapshots of r/place (with a ~5 second resolution).

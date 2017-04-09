@@ -1,0 +1,1 @@
+The place_gui project imeplements a graphical user interface application that reads in a binary diff file and dynamically renders an bitmap showing the state of r/place at any time step.
