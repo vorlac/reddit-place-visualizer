@@ -4,6 +4,4 @@ A C++ GUI application that lets you visualize r/place evolve over time. It loads
 
 It's a windows only application. 
 
-More details can be found here about the program and how to run it: https://www.reddit.com/r/place/comments/649ebe/i_wrote_a_c_application_that_lets_you_visualize/
-
 More details about the r/place archive diff file can be found here: https://www.reddit.com/r/place/comments/6396u5/rplace_archive_update/
